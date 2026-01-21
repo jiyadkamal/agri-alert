@@ -1,0 +1,372 @@
+@import "tailwindcss";
+
+@theme {
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+
+  /* Agriculture Specific */
+  --color-agri-green: var(--agri-green);
+  --color-agri-light: var(--agri-light);
+  --color-agri-brown: var(--agri-brown);
+  --color-agri-gold: var(--agri-gold);
+
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
+
+  --font-sans: var(--font-jakarta), var(--font-inter), sans-serif;
+
+  --animate-accordion-down: accordion-down 0.2s ease-out;
+  --animate-accordion-up: accordion-up 0.2s ease-out;
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-shimmer: shimmer 2s linear infinite;
+  --animate-glow: glow 2s ease-in-out infinite;
+  --animate-pulse-glow: pulse-glow 3s ease-in-out infinite;
+  --animate-slide-up: slide-up 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  --animate-fade-in: fade-in-up 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+
+  @keyframes accordion-down {
+    from {
+      height: 0;
+    }
+
+    to {
+      height: var(--radix-accordion-content-height);
+    }
+  }
+
+  @keyframes accordion-up {
+    from {
+      height: var(--radix-accordion-content-height);
+    }
+
+    to {
+      height: 0;
+    }
+  }
+
+  @keyframes float {
+
+    0%,
+    100% {
+      transform: translateY(0px);
+    }
+
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
+  @keyframes shimmer {
+    0% {
+      background-position: -200% 0;
+    }
+
+    100% {
+      background-position: 200% 0;
+    }
+  }
+
+  @keyframes glow {
+
+    0%,
+    100% {
+      box-shadow: 0 0 20px rgba(var(--primary-rgb), 0.3);
+    }
+
+    50% {
+      box-shadow: 0 0 40px rgba(var(--primary-rgb), 0.6);
+    }
+  }
+
+  @keyframes pulse-glow {
+
+    0%,
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    50% {
+      opacity: 0.8;
+      transform: scale(1.05);
+    }
+  }
+
+  @keyframes slide-up {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fade-in-up {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+:root {
+  /* High-End Agricultural Palette - "Verdant Gold" */
+
+  /* Background: Subtle, warm paper-like off-white */
+  --background: oklch(0.985 0.01 100);
+
+  /* Foreground: Deep, authoritative forest green-black */
+  --foreground: oklch(0.15 0.04 150);
+
+  /* Card: Pure White with transparency for glass effects */
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.15 0.04 150);
+
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.15 0.04 150);
+
+  /* Primary: Vibrant, Tech-Forward Emerald */
+  --primary: oklch(0.55 0.18 145);
+  --primary-foreground: oklch(0.98 0.02 145);
+
+  /* Secondary: Soft Sage for backgrounds/muted elements */
+  --secondary: oklch(0.95 0.03 145);
+  --secondary-foreground: oklch(0.40 0.10 145);
+
+  /* Muted: Neutral grey-green */
+  --muted: oklch(0.94 0.02 145);
+  --muted-foreground: oklch(0.50 0.05 145);
+
+  /* Accent: Golden Harvest - distinct from primary green */
+  --accent: oklch(0.82 0.16 85);
+  --accent-foreground: oklch(0.20 0.05 85);
+
+  --destructive: oklch(0.60 0.20 25);
+  --destructive-foreground: oklch(0.98 0.01 25);
+
+  --border: oklch(0.90 0.02 145);
+  --input: oklch(0.90 0.02 145);
+  --ring: oklch(0.55 0.18 145);
+
+  --radius: 1rem;
+  /* More rounded, premium feel */
+
+  /* Custom Agri Extensions */
+  --agri-green: oklch(0.55 0.18 145);
+  /* Same as primary for consistency */
+  --agri-light: oklch(0.92 0.05 145);
+  /* Light highlight green */
+  --agri-brown: oklch(0.40 0.08 50);
+  /* Rich soil */
+  --agri-gold: oklch(0.80 0.18 80);
+  /* Harvest Gold */
+}
+
+/* Dark Mode - Deep Forest Night */
+.dark {
+  --background: oklch(0.12 0.03 150);
+  /* Deep dark green-black */
+  --foreground: oklch(0.95 0.02 150);
+
+  --card: oklch(0.16 0.03 150);
+  --card-foreground: oklch(0.95 0.02 150);
+
+  --popover: oklch(0.14 0.03 150);
+  --popover-foreground: oklch(0.95 0.02 150);
+
+  --primary: oklch(0.65 0.18 145);
+  /* Slightly lighter for contrast on dark */
+  --primary-foreground: oklch(0.10 0.05 150);
+
+  --secondary: oklch(0.20 0.05 150);
+  --secondary-foreground: oklch(0.95 0.02 150);
+
+  --muted: oklch(0.20 0.04 150);
+  --muted-foreground: oklch(0.70 0.05 150);
+
+  --accent: oklch(0.70 0.15 85);
+  /* Slightly muted gold for dark mode */
+  --accent-foreground: oklch(0.10 0.03 85);
+
+  --destructive: oklch(0.50 0.20 25);
+  --destructive-foreground: oklch(0.98 0.01 25);
+
+  --border: oklch(0.25 0.05 150);
+  --input: oklch(0.25 0.05 150);
+  --ring: oklch(0.55 0.18 145);
+
+  --agri-light: oklch(0.25 0.08 145);
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased selection:bg-primary/20 selection:text-primary;
+    /* Optional: Subtle noise texture could be added here if an asset existed, 
+       but for now we'll stick to clean colors. */
+    font-feature-settings: "ss01", "ss02", "cv01", "cv02";
+  }
+
+  /* Enhanced focus-visible states globally */
+  *:focus-visible {
+    @apply outline-none ring-2 ring-primary/50 ring-offset-2 ring-offset-background;
+  }
+}
+
+@layer utilities {
+
+  /* Enhanced Glass Effects */
+  .glass {
+    @apply bg-white/70 backdrop-blur-2xl border border-white/50 shadow-2xl shadow-black/5;
+    backdrop-filter: blur(16px) saturate(180%);
+  }
+
+  .dark .glass {
+    @apply bg-black/50 backdrop-blur-2xl border border-white/15 shadow-2xl shadow-white/5;
+    backdrop-filter: blur(16px) saturate(180%);
+  }
+
+  .glass-card {
+    @apply bg-card/60 backdrop-blur-xl border border-border/60 shadow-lg transition-all duration-500;
+    backdrop-filter: blur(12px) saturate(150%);
+  }
+
+  .glass-card:hover {
+    @apply bg-card/80 border-primary/30 shadow-2xl shadow-primary/10;
+    transform: translateY(-2px);
+  }
+
+  /* Shimmer Effect */
+  .shimmer {
+    background: linear-gradient(90deg,
+        transparent,
+        rgba(255, 255, 255, 0.2),
+        transparent);
+    background-size: 200% 100%;
+    animation: shimmer 2s infinite;
+  }
+
+  /* Animated Gradient Background */
+  .gradient-animated {
+    background: linear-gradient(-45deg,
+        var(--primary),
+        var(--agri-green),
+        var(--accent),
+        var(--primary));
+    background-size: 400% 400%;
+    animation: gradient-shift 15s ease infinite;
+  }
+
+  @keyframes gradient-shift {
+
+    0%,
+    100% {
+      background-position: 0% 50%;
+    }
+
+    50% {
+      background-position: 100% 50%;
+    }
+  }
+
+  /* Glow Effects */
+  .glow {
+    @apply shadow-lg shadow-primary/30;
+    transition: box-shadow 0.3s ease;
+  }
+
+  .glow:hover {
+    @apply shadow-2xl shadow-primary/50;
+  }
+
+  .glow-sm {
+    @apply shadow-md shadow-primary/20;
+  }
+
+  .glow-lg {
+    @apply shadow-2xl shadow-primary/40;
+  }
+
+  /* Text Utilities */
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .text-gradient {
+    @apply bg-gradient-to-br from-primary via-agri-green to-agri-gold bg-clip-text text-transparent;
+    background-size: 200% 200%;
+  }
+
+  .text-gradient-gold {
+    @apply bg-gradient-to-br from-agri-gold via-amber-400 to-orange-500 bg-clip-text text-transparent;
+  }
+
+  .text-gradient-animated {
+    @apply bg-gradient-to-br from-primary via-agri-green to-agri-gold bg-clip-text text-transparent;
+    background-size: 200% 200%;
+    animation: gradient-shift 8s ease infinite;
+  }
+
+  /* Enhanced Focus */
+  .focus-glow:focus-visible {
+    @apply ring-2 ring-primary/60 ring-offset-2 ring-offset-background;
+    box-shadow: 0 0 0 4px rgba(var(--primary-rgb, 16 185 129), 0.1);
+  }
+
+  /* Stagger Animation Delays */
+  .stagger-1 {
+    animation-delay: 0.1s;
+  }
+
+  .stagger-2 {
+    animation-delay: 0.2s;
+  }
+
+  .stagger-3 {
+    animation-delay: 0.3s;
+  }
+
+  .stagger-4 {
+    animation-delay: 0.4s;
+  }
+}

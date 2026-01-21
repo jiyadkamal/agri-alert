@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
-import connectDB from "@/lib/db";
-import User from "@/models/User";
+import { getUserByVerificationToken, updateUser } from "@/lib/firestore";
 
 export async function GET(req: Request) {
     try {
@@ -11,16 +10,16 @@ export async function GET(req: Request) {
             return NextResponse.json({ error: "Missing token" }, { status: 400 });
         }
 
-        await connectDB();
-        const user = await User.findOne({ verificationToken: token });
+        const user = await getUserByVerificationToken(token);
 
         if (!user) {
             return NextResponse.json({ error: "Invalid or expired token" }, { status: 400 });
         }
 
-        user.isVerified = true;
-        user.verificationToken = undefined;
-        await user.save();
+        await updateUser(user.uid!, {
+            isVerified: true,
+            verificationToken: "" // Clear it
+        });
 
         // Redirect to login with success message
         return NextResponse.redirect(new URL("/login?verified=true", req.url));

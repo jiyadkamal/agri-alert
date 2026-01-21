@@ -1,18 +1,17 @@
 import { NextResponse } from "next/server";
-import connectDB from "@/lib/db";
-import User from "@/models/User";
+import { getUserByEmail, updateUser } from "@/lib/firestore";
 import crypto from "crypto";
 
 export async function POST(req: Request) {
     try {
-        await connectDB();
-        const { email } = await req.json();
+        const body = await req.json();
+        const { email } = body;
 
         if (!email) {
             return NextResponse.json({ error: "Email is required" }, { status: 400 });
         }
 
-        const user = await User.findOne({ email });
+        const user = await getUserByEmail(email);
 
         if (!user) {
             // Don't reveal if user exists or not for security, but for now we'll be helpful
@@ -20,11 +19,12 @@ export async function POST(req: Request) {
         }
 
         const resetToken = crypto.randomBytes(32).toString("hex");
-        const resetTokenExpiry = new Date(Date.now() + 3600000); // 1 hour
+        const resetTokenExpiry = new Date(Date.now() + 3600000).toISOString(); // 1 hour, ISO String for Firestore
 
-        user.resetToken = resetToken;
-        user.resetTokenExpiry = resetTokenExpiry;
-        await user.save();
+        await updateUser(user.uid!, {
+            resetToken,
+            resetTokenExpiry
+        });
 
         // MOCK EMAIL SENDING
         console.log(`[MOCK EMAIL] Reset link: http://localhost:3000/reset-password?token=${resetToken}`);

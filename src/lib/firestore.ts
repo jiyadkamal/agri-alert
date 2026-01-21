@@ -95,3 +95,15 @@ export async function getUserByResetToken(token: string): Promise<FirestoreUser 
 
     return null;
 }
+
+export async function getUserByVerificationToken(token: string): Promise<FirestoreUser | null> {
+    const snapshot = await db.collection(COLLECTION)
+        .where('verificationToken', '==', token)
+        .limit(1)
+        .get();
+
+    if (snapshot.empty) return null;
+
+    const doc = snapshot.docs[0];
+    return { uid: doc.id, ...doc.data() } as FirestoreUser;
+}
